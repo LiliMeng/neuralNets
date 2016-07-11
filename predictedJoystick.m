@@ -10,3 +10,5 @@ fileID3 = fopen('/home/lili/workspace/RNN/data/freq16/predictedJoystick.txt', 'w
 for i=1:N
     fprintf(fileID3, '%s %s %s\n', num2str(joyLR(i)),',',num2str(joyBF(i)));
 end
+
+fclose(fileID3);
