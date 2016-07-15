@@ -89,8 +89,8 @@ readData::readData(std::string filename)
             //lr_joy.push_back(allDataPointsVec[i][0]);
             //fb_joy.push_back(allDataPointsVec[i][1]);
         time.push_back(allDataPointsVec[i][0]);
-        fb_joy.push_back(allDataPointsVec[i][1]);
-        lr_joy.push_back(allDataPointsVec[i][2]);
+        fb_joy.push_back(allDataPointsVec[i][2]);
+        lr_joy.push_back(allDataPointsVec[i][1]);
         linear_vel.push_back(allDataPointsVec[i][3]);
         angular_vel.push_back(allDataPointsVec[i][4]);
 
