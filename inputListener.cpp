@@ -24,7 +24,6 @@
 
 
 #include <stdio.h>
-//#include "SCRF_util.hpp"
 #include <iomanip>
 
 
@@ -90,8 +89,8 @@ readData::readData(std::string filename)
             //lr_joy.push_back(allDataPointsVec[i][0]);
             //fb_joy.push_back(allDataPointsVec[i][1]);
         time.push_back(allDataPointsVec[i][0]);
-        fb_joy.push_back(allDataPointsVec[i][2]);
-        lr_joy.push_back(allDataPointsVec[i][1]);
+        fb_joy.push_back(allDataPointsVec[i][1]);
+        lr_joy.push_back(allDataPointsVec[i][2]);
         linear_vel.push_back(allDataPointsVec[i][3]);
         angular_vel.push_back(allDataPointsVec[i][4]);
 
@@ -374,10 +373,9 @@ int main(int argc, char** argv) {
     // publish Emergency Stop status messages
     eStop_pub.reset(new ros::Publisher);
     *eStop_pub = n.advertise<std_msgs::Bool> ("/eStop", 1);
+  /*
+	ros::Rate r(ROS_SPIN_RATE); // 25 hz
 
-
-	//ros::Rate r(ROS_SPIN_RATE); // 25 hz
- /*
 
 	while (ros::ok()) {
 		//send chair velocities to CanESDSenderJoystick
@@ -387,26 +385,30 @@ int main(int argc, char** argv) {
 		r.sleep();
 	}
 	*/
+
+
     double publish_period=0.0625;
 	ros::Rate r(16); //16 hz
 
 
-	std::string data_loc="/home/lci/workspace/wheelchair_files/seq1.txt";
-	//predictedJoystick.txt";
+	//std::string data_loc="/home/lci/workspace/wheelchair_files/pred_seq3_new.txt";
+	std::string data_loc="/home/lci/workspace/wheelchair_files/seq3_new.txt";
     readData read_data(data_loc);
 
 	double distance=0;
+
+
 
     while(ros::ok())
     {
 
         for(int i=0; i<read_data.lr_joy.size(); i++)
         {
-          // joystickmsg.linear = read_data.fb_joy[i];
-           // joystickmsg.angular= read_data.lr_joy[i];
+            double linear = read_data.fb_joy[i];
+            double angular= read_data.lr_joy[i];
+            //double linear =  read_data.linear_vel[i];
+            //double angular = read_data.angular_vel[i];
 
-            double linear= read_data.fb_joy[i];
-            double angular= read_data.lr_joy[i];//*32767;
             ROS_INFO("the linear velocity is %lf", linear);
 
             cartesianToPolarCoordinates(linear, angular);
